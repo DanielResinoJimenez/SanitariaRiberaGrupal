@@ -1,10 +1,10 @@
-const sequelize = require("../db");
+const sequelize = require("../db")
 
-const { Model, DataTypes } = require("sequelize");
+const { Model, DataTypes } = require("sequelize")
 
 class User extends Model {}
 
-Model.init({
+User.init({
     id_user: {
         autoIncrement: true,
         primaryKey: true,

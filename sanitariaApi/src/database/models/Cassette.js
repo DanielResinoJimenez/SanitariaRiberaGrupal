@@ -29,12 +29,12 @@ Cassette.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    id_usuario:{
+    id_user:{
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: "usuario",
-            key: "id"
+            key: "id_user"
         },
         onDelete: "CASCADE"
     }

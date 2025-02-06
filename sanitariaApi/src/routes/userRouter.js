@@ -1,6 +1,6 @@
 const userRouter = require("express").Router();
-const Muestra = require("../database/models/Muestra");
-const User = require("./../database/models/User")
+const User = require("../database/models/User");
+
 // const bcrypt = require("bcryptjs");
 // const { check, validationResult } = require("express-validator");
 // const moment = require("moment");
