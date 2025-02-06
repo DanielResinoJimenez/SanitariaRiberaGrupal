@@ -3,7 +3,7 @@ const apirouter = require("express").Router();
 
 // Variables
 const userRouter = require("./userRouter");
-// const clientesrouter = require("./clienteRouter");
+const cassetteRouter = require("./cassetteRouter");
 // const vehiculosrouter = require("./vehiculoRouter");
 // const fabricantesrouter = require("./fabricanteRouter");
 // const comprasrouter = require("./compraRouter");
@@ -11,8 +11,7 @@ const userRouter = require("./userRouter");
 
 // Rutas
 apirouter.use("/usuarios", userRouter);
-
-// apirouter.use("/clientes", clientesrouter);
+apirouter.use("/cassettes", cassetteRouter);
 // apirouter.use("/clientes",checkToken, clientesrouter)
 // apirouter.use("/vehiculos", vehiculosrouter);
 // apirouter.use("/vehiculos",checkToken, vehiculosrouter)

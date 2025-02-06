@@ -9,7 +9,9 @@ const sequelize = require("./database/db");
 // Importamos las asociaciones para que se generen en nuesta base de datos
 require("./database/associations")
 
-// Conversión a json
+// Conversión a json indispensable para el funcionamiento 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Configuramos rutas
 const apiroutes = require("./routes/apiRouter");
