@@ -18,6 +18,24 @@ cassetteRouter.post("/register", async (req, res) => {
     res.status(200).json(cassettes);
 });
 
+cassetteRouter.patch("/:id", (req, res) => {
+    const cassettes = cassette.update(
+      {
+        fecha: req.body.fecha,	
+        observaciones: req.body.observaciones,	
+        descripcion: req.body.descripcion,	
+        caracteristicas: req.body.caracteristicas,	
+        organo:	req.body.organo,
+      },
+      {
+        where: {
+          id_cassette: req.params.id,
+        },
+      }
+    );
+    res.json(cassettes);
+  });
+
 cassetteRouter.delete("/delete/:id_cassette", async (req, res) => {
     const deleteCassette = await cassette.destroy({
         where: { id_cassette: req.params.id_cassette }
