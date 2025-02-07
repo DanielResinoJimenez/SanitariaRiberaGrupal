@@ -22,7 +22,7 @@ cassetteRouter.post("/register", async (req, res) => {
     res.status(200).json(cassettes);
 });
 
-// Petición patch para modificar un cassette ya almacenado en la base de datosddddddddddd
+// Petición patch para modificar un cassette ya almacenado en la base de datos
 
 cassetteRouter.patch("/:id", (req, res) => {
     const cassettes = cassette.update(
