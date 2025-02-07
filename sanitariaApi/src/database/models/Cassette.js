@@ -12,6 +12,10 @@ Cassette.init({
         primaryKey: true,
         autoIncrement: true,
     },
+    identificador: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     fecha: {
         type: DataTypes.DATE,
         allowNull: false,

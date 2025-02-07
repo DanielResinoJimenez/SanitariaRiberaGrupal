@@ -11,7 +11,7 @@ Imagen.init({
     },
 
     imagen: {
-        type: DataTypes.BLOB,
+        type: DataTypes.BLOB.apply('long'),
         allowNull: false
     },
 
