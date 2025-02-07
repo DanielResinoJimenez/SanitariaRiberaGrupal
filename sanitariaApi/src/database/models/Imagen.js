@@ -13,6 +13,11 @@ Imagen.init({
     imagen: {
         type: DataTypes.BLOB,
         allowNull: false
+    },
+
+    tipo:{
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 }, {
     sequelize,

@@ -1,10 +1,14 @@
 const cassetteRouter = require("express").Router();
 const cassette = require("./../database/models/Cassette");
 
+// Petición get para obtener todos los cassettes almacenados en la base de datosd
+
 cassetteRouter.get("/all", async (req, res) => {
     const cassettes = await cassette.findAll();
     res.json(cassettes);
 })
+
+// Petición post para registrar un nuevo cassette en la base de datosd
 
 cassetteRouter.post("/register", async (req, res) => {
     const cassettes = await cassette.create({
@@ -17,6 +21,8 @@ cassetteRouter.post("/register", async (req, res) => {
     });
     res.status(200).json(cassettes);
 });
+
+// Petición patch para modificar un cassette ya almacenado en la base de datosddddddddddd
 
 cassetteRouter.patch("/:id", (req, res) => {
     const cassettes = cassette.update(
@@ -36,9 +42,11 @@ cassetteRouter.patch("/:id", (req, res) => {
     res.json(cassettes);
   });
 
-cassetteRouter.delete("/delete/:id_cassette", async (req, res) => {
+// Petición delete para borrar un cassette almacenado en la base de datos.
+
+cassetteRouter.delete("/delete/:id", async (req, res) => {
     const deleteCassette = await cassette.destroy({
-        where: { id_cassette: req.params.id_cassette }
+        where: { id_cassette: req.params.id }
     })
 
     res.status(200).json({ message: "Cassette eliminado exitosamente" });
