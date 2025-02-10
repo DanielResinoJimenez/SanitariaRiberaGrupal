@@ -1,56 +1,65 @@
 const cassetteRouter = require("express").Router();
-const cassette = require("./../database/models/Cassette");
+const cassette = require("./../controllers/cassetteController");
 
-// Petición get para obtener todos los cassettes almacenados en la base de datosd
+cassetteRouter.get("/all", cassette.getAllCassettes);
+cassetteRouter.get("/orderbydate", cassette.getPorFecha);
+cassetteRouter.get("/orderbyorganos", cassette.getPorOrgano);
+cassetteRouter.get("/:id", cassette.getUnCassette);
+cassetteRouter.get("/organos", cassette.onlyOrganos);
+cassetteRouter.post("/create", cassette.createCassette);
+cassetteRouter.put("/modify", cassette.updateCassette);
+cassetteRouter.delete("/delete", cassette.deleteCassette);
 
-cassetteRouter.get("/all", async (req, res) => {
-    const cassettes = await cassette.findAll();
-    res.json(cassettes);
-})
+// // Petición get para obtener todos los cassettes almacenados en la base de datosd
 
-// Petición post para registrar un nuevo cassette en la base de datosd
+// cassetteRouter.get("/all", async (req, res) => {
+//     const cassettes = await cassette.findAll();
+//     res.json(cassettes);
+// })
 
-cassetteRouter.post("/register", async (req, res) => {
-    const cassettes = await cassette.create({
-        fecha: req.body.fecha,	
-        observaciones: req.body.observaciones,	
-        descripcion: req.body.descripcion,	
-        caracteristicas: req.body.caracteristicas,	
-        organo:	req.body.organo,
-        id_user: req.body.id_user
-    });
-    res.status(200).json(cassettes);
-});
+// // Petición post para registrar un nuevo cassette en la base de datosd
 
-// Petición patch para modificar un cassette ya almacenado en la base de datos
+// cassetteRouter.post("/register", async (req, res) => {
+//     const cassettes = await cassette.create({
+//         fecha: req.body.fecha,	
+//         observaciones: req.body.observaciones,	
+//         descripcion: req.body.descripcion,	
+//         caracteristicas: req.body.caracteristicas,	
+//         organo:	req.body.organo,
+//         id_user: req.body.id_user
+//     });
+//     res.status(200).json(cassettes);
+// });
 
-cassetteRouter.patch("/:id", (req, res) => {
-    const cassettes = cassette.update(
-      {
-        fecha: req.body.fecha,	
-        observaciones: req.body.observaciones,	
-        descripcion: req.body.descripcion,	
-        caracteristicas: req.body.caracteristicas,	
-        organo:	req.body.organo,
-      },
-      {
-        where: {
-          id_cassette: req.params.id,
-        },
-      }
-    );
-    res.json(cassettes);
-  });
+// // Petición patch para modificar un cassette ya almacenado en la base de datos
 
-// Petición delete para borrar un cassette almacenado en la base de datos.
+// cassetteRouter.patch("/:id", (req, res) => {
+//     const cassettes = cassette.update(
+//       {
+//         fecha: req.body.fecha,	
+//         observaciones: req.body.observaciones,	
+//         descripcion: req.body.descripcion,	
+//         caracteristicas: req.body.caracteristicas,	
+//         organo:	req.body.organo,
+//       },
+//       {
+//         where: {
+//           id_cassette: req.params.id,
+//         },
+//       }
+//     );
+//     res.json(cassettes);
+//   });
 
-cassetteRouter.delete("/delete/:id", async (req, res) => {
-    const deleteCassette = await cassette.destroy({
-        where: { id_cassette: req.params.id }
-    })
+// // Petición delete para borrar un cassette almacenado en la base de datos.
 
-    res.status(200).json({ message: "Cassette eliminado exitosamente" });
+// cassetteRouter.delete("/delete/:id", async (req, res) => {
+//     const deleteCassette = await cassette.destroy({
+//         where: { id_cassette: req.params.id }
+//     })
 
-})
+//     res.status(200).json({ message: "Cassette eliminado exitosamente" });
+
+// })
 
 module.exports = cassetteRouter;
