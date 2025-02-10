@@ -1,9 +1,9 @@
-const Services = require("../services/Services");
+const cassetteService = require("../services/cassetteService");
 
 // OBTENER TODOS LOS CASSETTES
 const getAllCassettes = async (req, res) => {
     try {
-        const cassettes = await Services.getAllCassettes();
+        const cassettes = await cassetteService.getAllCassettes();
         res.status(200).json(cassettes);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -13,7 +13,7 @@ const getAllCassettes = async (req, res) => {
 // OBTENER UN CASSETTE
 const getUnCassette = async (req, res) => {
     try {
-        const cassette = await Services.getUnCassette(req.params.id);
+        const cassette = await cassetteService.getUnCassette(req.params.id);
         cassette
             ? res.status(200).json(cassette)
             : res.status(404).json({ message: "No se ha encontrado ningún cassette" });
@@ -25,7 +25,7 @@ const getUnCassette = async (req, res) => {
 // CREAR UN CASSETTE
 const createCassette = async (req, res) => {
     try {
-        const cassette = await Services.createServices(req.body);
+        const cassette = await cassetteService.createCassetteService(req.body);
         res.status(201).json(cassette);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -35,7 +35,7 @@ const createCassette = async (req, res) => {
 // OBTENER CASSETTE POR ORGANO
 const getPorOrgano = async (req, res) => {
     try {
-        const cassette = await Services.buscarPorOrgano(req.params.organo);
+        const cassette = await cassetteService.SearchPorOrgano(req.params.organo);
         cassette
             ? res.status(200).json(cassette)
             : res.status(404).json({ message: "No se ha encontrado ningún cassette para ese órgano" });
@@ -47,7 +47,7 @@ const getPorOrgano = async (req, res) => {
 // OBTENER SOLO ORGANOS
 const onlyOrganos = async (req, res) => {
     try {
-        const organos = await Services.getOnlyOrganos();
+        const organos = await cassetteService.getOnlyOrganos();
         res.status(200).json(organos);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -57,7 +57,7 @@ const onlyOrganos = async (req, res) => {
 // OBTENER CASSETTE POR FECHA
 const getPorFecha = async (req, res) => {
     try {
-        const cassette = await Services.buscarPorFecha(req.params.fecha);
+        const cassette = await cassetteService.SearchPorFecha(req.params.date);
         cassette
             ? res.status(200).json(cassette)
             : res.status(404).json({ message: "No se ha encontrado ningún cassette para esa fecha" });
@@ -69,7 +69,7 @@ const getPorFecha = async (req, res) => {
 // MODIFICAR CASSETTE
 const updateCassette = async (req, res) => {
     try {
-        const updatedCassette = await Services.updateCassette(req.body, req.params.id);
+        const updatedCassette = await cassetteService.updateCassette(req.body, req.params.id);
         updatedCassette
             ? res.status(200).json({ message: `El cassette con ID ${req.params.id} se ha modificado correctamente` })
             : res.status(404).json({ message: "El cassette no se ha encontrado o no se ha modificado" });
@@ -81,7 +81,7 @@ const updateCassette = async (req, res) => {
 // BORRAR CASSETTE
 const deleteCassette = async (req, res) => {
     try {
-        const deletedCassette = await Services.deleteCassette(req.params.id);
+        const deletedCassette = await cassetteService.deleteCassette(req.params.id);
         deletedCassette
             ? res.status(200).json({ message: "El cassette se ha borrado correctamente" })
             : res.status(404).json({ message: "El cassette no se ha encontrado o no se ha podido borrar" });
@@ -93,7 +93,7 @@ const deleteCassette = async (req, res) => {
 // POST
 const post = async (req, res) => {
     try {
-        await Services.post(req.body);
+        await cassetteService.post(req.body);
         res.status(201).json({ message: "Registro creado correctamente", data: req.body });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -103,7 +103,7 @@ const post = async (req, res) => {
 // PUT
 const put = async (req, res) => {
     try {
-        await Services.put(req.body, req.params.id);
+        await cassetteService.put(req.body, req.params.id);
         res.status(200).json({ message: "Registro actualizado correctamente", data: req.body });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -113,7 +113,7 @@ const put = async (req, res) => {
 // PATCH
 const patch = async (req, res) => {
     try {
-        await Services.patch(req.body, req.params.id);
+        await cassetteService.patch(req.body, req.params.id);
         res.status(200).json({ message: "Registro actualizado parcialmente", data: req.body });
     } catch (error) {
         res.status(500).json({ error: error.message });

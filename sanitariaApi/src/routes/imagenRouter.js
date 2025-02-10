@@ -18,3 +18,5 @@ const upload = multer({ storage: storage });
 // Petición post para subir una imagen de una muestra específica
 
 imagenRouter.post("/subir/:id", upload.single("imagen"), imageController.createNewImage);
+
+module.exports = imagenRouter;

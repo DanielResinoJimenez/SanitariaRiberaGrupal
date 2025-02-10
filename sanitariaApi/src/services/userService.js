@@ -46,7 +46,8 @@ const register = async (user) => {
             nombre_user: user.nombre_user,
             apellidos_user: user.apellidos_user,
             email_user: user.email_user,
-            password: bcrypt.hashSync(user.password_user, 10),
+            password_user: bcrypt.hashSync(user.password_user, 10),
+            rol: "user"
         });
     } catch (error) {
         console.error("Error al registrar usuario:", error);

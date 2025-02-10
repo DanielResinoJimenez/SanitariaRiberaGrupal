@@ -3,7 +3,7 @@ const Services = require("../services/userService");
 // OBTENER TODOS LOS USUARIOS
 const getUsers = async (req, res) => {
     try {
-        const users = await Services.getAllusers();
+        const users = await Services.getAllUsers();
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });

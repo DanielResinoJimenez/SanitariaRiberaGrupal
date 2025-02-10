@@ -7,9 +7,9 @@ const moment = require("moment");
 const jwt = require("jwt-simple");
 
 
-userRouter.get("/all", userController.getAllUsers);
-userRouter.get("/email", userController.getUnUserEmail);
-userRouter.post("register", userController.registro);
+userRouter.get("/all", userController.getUsers);
+userRouter.get("/:email_user", userController.getUnUserEmail);
+userRouter.post("/register", userController.registro);
 userRouter.get("/login", userController.login);
 
 // Función token

@@ -75,19 +75,6 @@ const updateCassette = async (newCassette, id) => {
     }
 };
 
-//REVISAR LA ELIMINACION DE CASSETTES
-/* 
-// BORRAR CASSETTE
-const deleteCassette = async (id) => {
-    try {
-        return await Cassette.destroy({ where: { id_cassette: id } });
-    } catch (error) {
-        console.error("Error eliminando cassette:", error);
-        throw error;
-    }
-};
- */
-
 // OBTENER MUESTRAS ASOCIADAS A UN CASSETTE
 const getMuestras = async (id) => {
     try {
@@ -136,7 +123,6 @@ const patch = async (newCassette, id) => {
 };
 
 //MIRALO PQ NO SE SI HAY QUE ELIMINAR ASI LOS CASSETTES 
-/*
 const remove = async (id) => {
     try {
         // Primero, eliminamos todas las muestras asociadas al cassette
@@ -152,7 +138,6 @@ const remove = async (id) => {
     }
 };
 
-*/
 
 // EXPORTAR FUNCIONES
 module.exports = {
@@ -163,7 +148,7 @@ module.exports = {
     SearchPorFecha,
     getOnlyOrganos,
     updateCassette,
-    deleteCassette,
+    remove,
     getMuestras,
     put,
     post,
