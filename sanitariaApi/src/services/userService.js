@@ -2,6 +2,8 @@ const User = require("../database/models/User");
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const jwt = require("jwt-simple");
+const generatePassword = require("generate-password-browser");
+const emailService = require('./emailService');
 
 // OBTENER TODOS LOS USUARIOS
 const getAllUsers = async () => {
@@ -11,6 +13,35 @@ const getAllUsers = async () => {
 // BUSCAR UN USUARIO POR EMAIL
 const getUnUserEmail = async (email_user) => {
     return await User.findOne({ where: { email_user } });
+};
+
+// GENERAR CONTRASEÑA
+
+const generateUserPassword = () => {
+    return generatePassword.generate({
+        length: 18,
+        numbers: true,
+        symbols: true,
+        uppercase: true,
+        lowercase: true,
+        strict: true
+    });
+};
+
+// ENVIAR CORREO CAMBIO CONTRASEÑA
+
+const resetUserPassword = async (email) => {
+    const newPassword = generateUserPassword();
+    // Aquí deberías actualizar la contraseña del usuario en la base de datos (encriptada)
+    // Por ejemplo: await userModel.updatePassword(email, hash(newPassword));
+
+    const emailSent = await emailService.sendPasswordResetEmail(email, newPassword);
+
+    if (emailSent) {
+        return { success: true, message: 'Correo enviado exitosamente.' };
+    } else {
+        throw new Error('No se pudo enviar el correo.');
+    }
 };
 
 // CREAR TOKEN DE AUTENTICACIÓN
@@ -83,31 +114,6 @@ const updatePassUserLog = async (newPassword, email_user) => {
     return await updatePassUser(newPassword, email_user);
 };
 
-// CREAR UN USUARIO (POST)
-const post = async (newUser) => {
-    try {
-        return await User.create({
-            nombre_user: newUser.nombre_user,
-            apellidos_user: newUser.apellidos_user,
-            email_user: newUser.email_user,
-            password: bcrypt.hashSync(newUser.password, 10),
-        });
-    } catch (error) {
-        console.error("Error creando usuario:", error);
-        return { error: "No se pudo crear el usuario" };
-    }
-};
-
-// ACTUALIZAR UN USUARIO (PUT)
-const put = async (newUser, id) => {
-    return await User.update(newUser, { where: { id } });
-};
-
-// ACTUALIZAR UN USUARIO (PATCH)
-const patch = async (newUser, id) => {
-    return await User.update(newUser, { where: { id } });
-};
-
 // ELIMINAR UN USUARIO
 const remove = async (id) => {
     try {
@@ -122,13 +128,12 @@ const remove = async (id) => {
 module.exports = {
     getAllUsers,
     getUnUserEmail,
+    generateUserPassword,
+    resetUserPassword,
     register,
     login,
     updateUser,
     updatePassUser,
     updatePassUserLog,
-    post,
-    put,
-    patch,
     remove,
 };

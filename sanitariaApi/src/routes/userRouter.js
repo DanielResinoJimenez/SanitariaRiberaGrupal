@@ -1,14 +1,10 @@
 const userRouter = require("express").Router();
 const userController = require("../controllers/userController");
 
-const bcrypt = require("bcryptjs");
-const { check, validationResult } = require("express-validator");
-const moment = require("moment");
-const jwt = require("jwt-simple");
-
-
 userRouter.get("/all", userController.getUsers);
 userRouter.get("/:email_user", userController.getUnUserEmail);
+userRouter.get("/generate-password", userController.getGeneratedPassword);
+userRouter.post('/reset-password', userController.requestPasswordReset);
 userRouter.post("/register", userController.registro);
 userRouter.get("/login", userController.login);
 

@@ -2,6 +2,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
+const cors = require("cors")
 
 // Concectamos con la base de datos
 const sequelize = require("./database/db");
@@ -12,6 +13,7 @@ require("./database/associations")
 // Conversión a json indispensable para el funcionamiento 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Configuramos rutas
 const apiroutes = require("./routes/apiRouter");

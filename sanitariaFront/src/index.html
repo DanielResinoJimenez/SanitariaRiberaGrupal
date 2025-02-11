@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ribera Sanitaria</title>
+    <link href="./css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg_login flex flex-col items-center min-h-screen bg-gray-100">
+    
+    <!-- Header -->
+    <header class="w-full bg-gray-10 p-4 text-center mt-3">
+        <img src="./assets/images/logo.png" alt="" class="w-35 mx-auto">
+        <h1 class="mainTitle text-2xl font-semibold text-gray-900">Sanitaria Ribera</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class=" w-full max-w-md p-6 rounded-lg shadow-md m-8 bg-gray-200">
+
+        <!-- Form Login-->
+        <form id="loginForm" action="" method="POST" class="flex flex-col gap-2 " novalidate>
+            <div class="flex justify-between w-full">
+                <h1 class="text-md font-bold text-left pl-2 border-l-2 my-2 text-blue-500 mainTitle">Accede a tu cuenta!</h1>
+                <img src="./assets/images/logo.png" alt="" class="w-12 ">
+            </div>   
+            <!-- Email -->
+            <input type="email" name="email" id="emailLogin" placeholder="Correo" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-3">
+            <p id="errorEmailLogin" class="m-0 p-0 text-right text-red-400 text-xs pr-2"></p>
+            <!-- Password -->
+            <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+                <input type="password" name="password" id="passwordLogin" placeholder="Contraseña"  minlength="8" maxlength="16" 
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$"
+                    class="w-full p-3 focus:outline-none">
+                <button type="button" class="p-3 text-gray-500" id="showPasswordLogin">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </button>
+            </div>
+            <p id="errorPasswordLogin" class="m-0 p-0 text-right text-red-400 text-xs pr-2"></p>
+            <!-- Forget Password -->
+            <a href="#" class="text-center text-sm my-3 text-blue-400" id="getPassword">Olvidaste tu contraseña...</a>
+            <!-- Login -->
+            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 transition" id="loginButton">Entrar</button>
+            <hr class="my-3 text-gray-400">
+            <!-- Register Link -->
+            <label for="" class="text-center text-sm  text-gray-500">Si no tienes cuenta... <a href="" class="text-blue-400" id="registerLink">Registro</a></label>
+        </form>
+
+        <!-- Form Register-->
+        <form id="registerForm" class="hiddenForm flex flex-col gap-2">
+            <div class="flex justify-between w-full">
+                <h1 class="text-md font-bold text-left pl-2 border-l-2 my-2 text-blue-500 mainTitle">Crear una cuenta...</h1>
+                <img src="./assets/images/logo.png" alt="" class="w-12 ">
+            </div> 
+            <!-- Name -->
+            <input type="text" name="name" id="name" placeholder="Nombre" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <p id="errorName" class="m-0 p-0 text-right text-red-400 text-xs pr-2"></p>
+            <!-- LastName -->
+            <input type="text" name="lastname" id="lastName" placeholder="Apellidos" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <p id="errorLastName" class="m-0 p-0 text-right text-red-400 text-xs pr-2"></p>
+            <!-- Email -->
+            <input type="email" name="email" id="emailRegister" placeholder="Correo" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <p id="errorEmailRegister" class="m-0 p-0 text-right text-red-400 text-xs pr-2"></p>
+            <!-- Password -->
+            <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+                <input type="password" name="password" id="passwordRegister" placeholder="Contraseña"  minlength="8" maxlength="16" 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$"
+                class="w-full p-3 focus:outline-none">
+                <button type="button" class="p-3 text-gray-500" id="showPasswordRegister">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </button>
+            </div>
+            <label for="" class="text-right text-xs text-gray-500">8-16 caracteres, mayúsculas, minúsculas, números y símbolos.</label>
+            <!-- Repeat Password -->
+            <input type="password" name="password2" id="password2Register" placeholder="Repetir Contraseña" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p id="errorPasswordRegister" class="m-0 p-0 text-right text-red-400 text-xs pr-2"></p>
+            <!-- Register -->
+            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 transition my-3" id="registerButton">Registro</button>
+            <hr class="my-2 text-gray-400">
+            <!-- Login link -->
+            <label for="" class="text-center text-sm  text-gray-500">Si ya te has registrado anteriormente... <a href="" class="text-blue-400" id="loginLink">Login</a></label>
+        </form>
+
+        <!-- Form Restart Password -->
+        <form id="passwordForm" class="hiddenForm flex flex-col gap-2" novalidate>
+            <div class="flex justify-between w-full">
+                <h1 class="text-md font-bold text-left pl-2 border-l-2 my-2 text-blue-500 mainTitle">Solicitar Contraseña...</h1>
+                <img src="./assets/images/logo.png" alt="" class="w-12 ">
+            </div> 
+            <!-- Email -->
+            <input type="email" name="email" id="email" placeholder="Correo" 
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-1">
+            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 transition my-3">Solicitar Contraseña</button>
+            <label for="" class="text-center text-sm  text-gray-500">Si ya te has registrado anteriormente... <a href="" class="text-blue-400" id="loginLink">Volver a Login</a></label>
+        </form>
+     
+    </div>
+    <script src="./js/login.js"></script>
+    <script src="./js/validateForm.js"></script>
+    <script src="./js/validateUser.js"></script>
+</body>
+</html>

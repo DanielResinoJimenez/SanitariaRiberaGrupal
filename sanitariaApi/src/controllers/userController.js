@@ -22,6 +22,29 @@ const getUnUserEmail = async (req, res) => {
     }
 };
 
+// Generar password
+
+const getGeneratedPassword = (req, res) => {
+    try {
+        const password = userService.generateUserPassword();
+        res.status(200).json({ password });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al generar la contraseña' });
+    }
+};
+
+// Endpoint para solicitar el reseteo de contraseña
+const requestPasswordReset = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const result = await userService.resetUserPassword(email);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al intentar enviar el correo.' });
+    }
+};
+
 // REGISTRO DE USUARIO
 const registro = async (req, res) => {
     try {
@@ -80,44 +103,6 @@ const updatePassUserLog = async (req, res) => {
     }
 };
 
-// CREAR UN USUARIO (POST)
-const post = async (req, res) => {
-    try {
-        const resp = await Services.post(req.body);
-        if (resp.name === "SequelizeUniqueConstraintError") {
-            res.status(409).json({ error: "El email ya está vinculado a una cuenta. Si está registrado, inicie sesión." });
-        } else {
-            res.status(201).json({ message: "Usuario creado correctamente", data: resp });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-// ACTUALIZAR USUARIO COMPLETO (PUT)
-const put = async (req, res) => {
-    try {
-        const updatedUser = await Services.put(req.body, req.params.id_user);
-        updatedUser
-            ? res.status(200).json({ message: "Usuario actualizado correctamente", data: req.body })
-            : res.status(404).json({ message: "Usuario no encontrado" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-// ACTUALIZAR PARCIALMENTE USUARIO (PATCH)
-const patch = async (req, res) => {
-    try {
-        const updatedUser = await Services.patch(req.body, req.params.id_user);
-        updatedUser
-            ? res.status(200).json({ message: "Usuario actualizado parcialmente", data: req.body })
-            : res.status(404).json({ message: "Usuario no encontrado" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 // ELIMINAR USUARIO
 const remove = async (req, res) => {
     try {
@@ -133,13 +118,12 @@ const remove = async (req, res) => {
 module.exports = {
     getUsers,
     getUnUserEmail,
+    getGeneratedPassword,
+    requestPasswordReset,
     registro,
     login,
     updateUser,
     updatePassUser,
     updatePassUserLog,
-    post,
-    put,
-    patch,
     remove
 };
