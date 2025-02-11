@@ -15,32 +15,49 @@ const getUnUserEmail = async (email_user) => {
     return await User.findOne({ where: { email_user } });
 };
 
-// GENERAR CONTRASEÑA
+// ENVIAR CORREO CAMBIO CONTRASEÑA
 
-const generateUserPassword = () => {
-    return generatePassword.generate({
-        length: 18,
+const resetUserPassword = async (email) => {
+    console.log('Generando nueva contraseña para:', email);
+
+    // Generar nueva contraseña
+    const newPassword = generatePassword.generate({
+        length: 10,
         numbers: true,
         symbols: true,
         uppercase: true,
         lowercase: true,
         strict: true
     });
-};
 
-// ENVIAR CORREO CAMBIO CONTRASEÑA
+    console.log('Nueva contraseña generada:', newPassword);
 
-const resetUserPassword = async (email) => {
-    const newPassword = generateUserPassword();
-    // Aquí deberías actualizar la contraseña del usuario en la base de datos (encriptada)
-    // Por ejemplo: await userModel.updatePassword(email, hash(newPassword));
+    try {
+        // Buscar al usuario por correo
+        const user = await User.findOne({ where: { email_user: email } });
 
-    const emailSent = await emailService.sendPasswordResetEmail(email, newPassword);
+        if (!user) {
+            throw new Error('Usuario no encontrado.');
+        }
 
-    if (emailSent) {
-        return { success: true, message: 'Correo enviado exitosamente.' };
-    } else {
-        throw new Error('No se pudo enviar el correo.');
+        // Encriptar la nueva contraseña
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Actualizar la contraseña en la base de datos
+        await user.update({ password: hashedPassword });
+
+        console.log('Contraseña actualizada en la base de datos.');
+
+        // Enviar el correo con la nueva contraseña
+        const emailSent = await emailService.sendPasswordResetEmail(email, newPassword);
+        if (emailSent) {
+            return { success: true, message: 'Contraseña actualizada y correo enviado exitosamente.' };
+        } else {
+            throw new Error('No se pudo enviar el correo.');
+        }
+    } catch (error) {
+        console.error('Error al resetear la contraseña:', error);
+        throw error;
     }
 };
 
@@ -128,7 +145,6 @@ const remove = async (id) => {
 module.exports = {
     getAllUsers,
     getUnUserEmail,
-    generateUserPassword,
     resetUserPassword,
     register,
     login,

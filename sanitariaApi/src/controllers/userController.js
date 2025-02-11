@@ -35,13 +35,16 @@ const getGeneratedPassword = (req, res) => {
 
 // Endpoint para solicitar el reseteo de contraseña
 const requestPasswordReset = async (req, res) => {
-    const { email } = req.body;
+    const email  = req.body.email_user;
+
+    console.log('Solicitud de reseteo recibida para:', email);
 
     try {
-        const result = await userService.resetUserPassword(email);
+        const result = await Services.resetUserPassword(email);
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ error: 'Error al intentar enviar el correo.' });
+        console.error('Error en el controlador:', error);
+        res.status(500).json({ error: 'Error al intentar actualizar la contraseña y enviar el correo.' });
     }
 };
 

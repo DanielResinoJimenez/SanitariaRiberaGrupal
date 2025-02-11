@@ -6,6 +6,7 @@ const passwordForm = document.getElementById('passwordForm');
 const getPassword = document.getElementById('getPassword');
 const buttonPasswordLogin = document.getElementById('showPasswordLogin');
 const buttonPasswordRegister = document.getElementById('showPasswordRegister');
+const emailNewPass = document.getElementById("emailNewPass")
 
 // Show login or register form
 const showForm = (event) => {
@@ -53,12 +54,10 @@ buttonPasswordRegister.addEventListener("click", showPasswordRegister);
 const newPassword = (event) => {
     event.preventDefault();
 
-    const email = document.getElementById("email").value;
-
     fetch("http://localhost:3000/sanitaria/usuarios/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email_user: email })
+        body: JSON.stringify({ email_user: emailNewPass.value })
     })
     .then(response => response.json())
     .then(data => {
