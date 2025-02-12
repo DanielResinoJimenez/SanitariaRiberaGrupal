@@ -53,7 +53,7 @@ const validateLogin = (event) => {
         .then(data => {
             console.log(data);
             alert("Usuario logueado correctamente");
-            window.location.href = "./pages/prueba.html";
+            window.location.href = "./pages/principalCassette.html";
         })
         .catch(error => {
             console.error('Error:', error);
@@ -126,7 +126,7 @@ const validateRegister = (event) => {
             password_user: password.value
         }
 
-        fetch(createUserRoute, {
+        fetch("http://localhost:3000/sanitaria/usuarios/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -8,6 +8,6 @@ cassetteRouter.get("/:id", cassette.getUnCassette);
 cassetteRouter.get("/organos", cassette.onlyOrganos);
 cassetteRouter.post("/create", cassette.createCassette);
 cassetteRouter.put("/modify/:id", cassette.updateCassette);
-cassetteRouter.delete("/delete", cassette.deleteCassette);
+cassetteRouter.delete("/delete/:id", cassette.deleteCassette);
 
 module.exports = cassetteRouter;

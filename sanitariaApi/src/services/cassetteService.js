@@ -100,27 +100,7 @@ const post = async (newCassette) => {
         console.error("Error creando cassette:", error);
         return error;
     }
-};
-
-// ACTUALIZAR UN REGISTRO (PUT)
-const put = async (newCassette, id) => {
-    try {
-        return await Cassette.update(newCassette, { where: { id_cassette: id } });
-    } catch (error) {
-        console.error("Error actualizando cassette:", error);
-        throw error;
-    }
-};
-
-// ACTUALIZACIÓN PARCIAL (PATCH)
-const patch = async (newCassette, id) => {
-    try {
-        return await Cassette.update(newCassette, { where: { id_cassette: id } });
-    } catch (error) {
-        console.error("Error haciendo patch en cassette:", error);
-        throw error;
-    }
-};
+};  
 
 //MIRALO PQ NO SE SI HAY QUE ELIMINAR ASI LOS CASSETTES 
 const remove = async (id) => {
@@ -129,7 +109,7 @@ const remove = async (id) => {
         await Muestra.destroy({ where: { id_cassette: id } });
 
         // Luego, eliminamos el cassette
-        const deletedCassette = await Cassette.destroy({ where: { id } });
+        const deletedCassette = await Cassette.destroy({ where: {id_cassette: id}});
 
         return deletedCassette ? "Cassette y sus muestras eliminados correctamente" : "Cassette no encontrado";
     } catch (error) {
@@ -150,7 +130,4 @@ module.exports = {
     updateCassette,
     remove,
     getMuestras,
-    put,
-    post,
-    patch
 };

@@ -81,7 +81,7 @@ const updateCassette = async (req, res) => {
 // BORRAR CASSETTE
 const deleteCassette = async (req, res) => {
     try {
-        const deletedCassette = await cassetteService.deleteCassette(req.params.id);
+        const deletedCassette = await cassetteService.remove(req.params.id);
         deletedCassette
             ? res.status(200).json({ message: "El cassette se ha borrado correctamente" })
             : res.status(404).json({ message: "El cassette no se ha encontrado o no se ha podido borrar" });
