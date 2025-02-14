@@ -38,11 +38,13 @@ const organos = document.getElementById('organos');
 const fechaInicioInput = document.getElementById('fechaInicioInput');
 const fechaFinInput = document.getElementById('fechaFinInput');
 const muestra__tbody = document.getElementById('muestra__tbody');
+const tbody = document.getElementById("tbody");
 
 const descripcion = document.getElementById('cassette__descripcion');
 const organo = document.getElementById('cassette__organo');
 const caracteristicas = document.getElementById('cassette__caracteristicas');
 const observaciones = document.getElementById('cassette__observaciones');
+const id_cassette = document.getElementById("cassette_id")
 
 
 // Modal Nueva Muestra
@@ -107,6 +109,7 @@ const mostrarDetalles = (index) => {
   observaciones.textContent = cassette.observaciones;
   selectedIndex = index;
   actualizarTablaMuestras();
+  mostrarMuestraPorCassette(cassette.id_cassette);
 }
 
 // Limpia los detalles de un cassette seleccionado
@@ -293,13 +296,9 @@ modalSave.addEventListener('click', () => {
     caracteristicas: modalCaracteristicas.value,
     observaciones: modalObservaciones.value,
     identificador: crypto.randomUUID(),
-    id_cassette: crypto.randomUUID(),
     id_user : 1 // SE DEBE DE COGER DEL LOCAL STORAGE
   };
 
-  // cassettes.push(nuevoCassette);
-
-  // localStorage.setItem('cassettes', JSON.stringify(cassettes));
   post('cassettes_insert', nuevoCassette);
   modalCassette.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -425,6 +424,14 @@ fechaFinInput.addEventListener('change', () => {
   actualizarTabla(filtered_cassettes);
 });
 
+// Cargar muestras de cassettes
+const muestras = []
+const cargarMuestrasApi = () => {
+  fetch("http://localhost:3000/sanitaria/muestras/all")
+  .then(response => response.json())
+  .then(data => data.forEach((muestra) => {muestras.push(muestra)}));
+}
+
 // Inicializa la aplicación cuando el DOM está completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
   // Función para que al crear un nuevo cassette la fecha no pueda ser anterior al día de hoy
@@ -433,24 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fechaInput.setAttribute('min', hoy);
   selectedIndex = -1;
   cassettesApi();
-
-  //Guardar los cassettes en el localStorage
-  // cassettes = localStorage.getItem('cassettes') ? JSON.parse(localStorage.getItem('cassettes')) : [];
-  // console.log(cassettes)
-  // if (cassettes.length === 0) {
-  //   fetch(`${urls.backend}${urls.cassettes}`).then(response => response.json()).then(data =>
-  //   {
-  //     cassettes = data
-  //     localStorage.setItem('cassettes', JSON.stringify(cassettes));
-  //     actualizarTabla(cassettes);
-  //     console.log(cassettes)
-  //   }
-  //   )
-
-  // }else{
-    
-  // }
-  
+  cargarMuestrasApi();
 });
 
 // Muestra el modal de detalles de una muestra específica
@@ -458,6 +448,38 @@ const mostrarModalMuestra = (muestra) => {
   modalMuestra.classList.remove('hidden');
   document.body.classList.remove('modal-open');
   // TENGO QUE CARGAR LOS DATOS EN EL MODAL DE MUESTRA QUE VIENEN DE EL PARAMETRO MUESTRA DE LA FUNCION
+}
+
+// Funciones con muestras
+
+const cargarMuestraTabla = (muestras) => {
+  const fragment = document.createDocumentFragment();
+  muestras.forEach((muestra) => {
+    let tr = document.createElement("tr");
+    let fecha = document.createElement("td");
+    let descripcion = document.createElement("td");
+    let tincion = document.createElement("td");
+    fecha.textContent = muestra.fecha_muestra;
+    descripcion.textContent = muestra.descripcion;
+    tincion.textContent = muestra.tincion;
+    tr.appendChild(fecha);
+    tr.appendChild(descripcion);
+    tr.appendChild(tincion);
+    fragment.appendChild(tr);
+  })
+  muestra__tbody.appendChild(fragment);
+}
+
+const mostrarMuestraPorCassette = (id_cassette) => {
+  const muestraPorCassette = muestras.filter((mues) => mues.id_cassette == parseInt(id_cassette));
+  console.log(muestraPorCassette);
+  cargarMuestraTabla(muestraPorCassette);
+}
+
+// Añadir muestras a un cassette concreto
+
+const aniadirMuestras = () => {
+
 }
 
 // Maneja el evento de clic en los botones de detalles de muestra en la tabla

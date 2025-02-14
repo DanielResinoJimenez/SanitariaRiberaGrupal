@@ -5,7 +5,7 @@ userRouter.get("/all", userController.getUsers);
 userRouter.get("/:email_user", userController.getUnUserEmail);
 userRouter.get("/generate-password", userController.getGeneratedPassword);
 userRouter.post('/reset-password', userController.requestPasswordReset);
-userRouter.post("/register", userController.registro);
+userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
 
 // Función token

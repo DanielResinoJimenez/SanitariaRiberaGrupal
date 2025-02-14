@@ -74,18 +74,29 @@ const createToken = (user) => {
 // LOGIN DE USUARIO
 const login = async (req) => {
     try {
+        // Buscar usuario por email
         const user = await User.findOne({ where: { email_user: req.email_user } });
 
-        if (user && bcrypt.compareSync(req.password, user.password)) {
-            return { success: createToken(user) };
-        } else {
+        // Validar si el usuario existe
+        if (!user) {
             return { error: "Usuario o contraseña incorrectos" };
         }
+
+        // Comparar la contraseña ingresada con la almacenada en la base de datos
+        const isCorrectPass = await bcrypt.compare(req.password_user, user.password_user);
+        if (!isCorrectPass) {
+            return { error: "Usuario o contraseña incorrectos" };
+        }
+
+        // Crear token y devolverlo en la respuesta
+        const token = createToken(user);
+        return { token };
     } catch (error) {
         console.error("Error en login:", error);
         return { error: "Ocurrió un error en el login" };
     }
 };
+
 
 // REGISTRO DE USUARIO
 const register = async (user) => {
