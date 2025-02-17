@@ -4,6 +4,7 @@ const muestra = require("./../controllers/muestraController");
 muestraRouter.get("/all", muestra.getMuestras);
 muestraRouter.get("/:id", muestra.getUnMuestra);
 muestraRouter.post("/create", muestra.createMuestra);
-muestraRouter.get("/delete/:id", muestra.remove);
+muestraRouter.put("/modify/:id", muestra.put);
+muestraRouter.delete("/delete/:id", muestra.remove);
 
 module.exports = muestraRouter;

@@ -84,25 +84,5 @@ const remove = async (req, res) => {
     }
 };
 
-//SIN CHATGPT
-/* const post = async (req, res) => {
-    Services.post(req.body)
-    res.status(200).json(req.body)
-}
-
-const put = (req, res) => {
-    Services.put(req.body, req.params.id)
-    res.status(200).json(req.body)
-}
-
-const patch = (req, res) => {
-    Services.put(req.body, req.params.id)
-    res.status(200).json(req.body)
-}
-
-const remove = async (req, res) => {
-    await res.json(Services.remove(req.params.id))
-} */
-
 // Exportamos las funciones para que puedan ser utilizadas en las rutas del servidor
 module.exports = { getMuestras, getUnMuestra, createMuestra, post, put, patch, remove };

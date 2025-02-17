@@ -46,9 +46,9 @@ const patch = async (newMuestra, id_muestra) => {
     }
 };
 
-const remove = async (id_muestra) => {
+const remove = async (id) => {
     try {
-        const deleted = await Muestra.destroy({ where: { id_muestra } });
+        const deleted = await Muestra.destroy({ where: {id_muestra : id} });
         return deleted ? "Muestra eliminada correctamente" : "No se encontró la muestra";
     } catch (error) {
         console.error("Error eliminando la muestra:", error);
